@@ -558,7 +558,25 @@ button { font: inherit; color: inherit; }
   transition: transform .25s ease;
 }
 .btn-primary:hover { transform: translateY(-2px); }
-.closing__made { margin: 56px 0 0; font-size: 13px; color: #7A4E4C; }
+.made-by { margin-top: 64px; }
+.made-by__divider { color: var(--wine); }
+.made-by__divider span { width: 44px; background: #C99A9A; }
+.made-by__label {
+  margin: 18px 0 2px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #8A3A45;
+}
+.made-by__name {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 600;
+  font-size: clamp(30px, 6vw, 40px);
+  line-height: 1.2;
+  color: var(--wine);
+}
 
 /* =========================================================
    Música flotante

@@ -14,7 +14,7 @@
 
 window.SITE_DATA = {
   momName: 'Nallely',
-  signature: '[TU NOMBRE]',
+  signature: 'Deivid',
 
   // Canción (deja '' si no quieres música)
   music: 'assets/musica/cancion.mp3',
@@ -50,7 +50,7 @@ window.SITE_DATA = {
       title: 'Pequeño',
       ages: '5 a 10 años',
       quote: 'Tú eras mi mundo entero',
-      text: 'Tus manos eran el lugar más seguro del mundo. Me enseñaste a atarme los zapatos, a pedir perdón y a no tenerle miedo a la oscuridad. Cada raspón se curaba con un beso tuyo, y cada noche terminaba con tu voz contándome [nuestro cuento favorito].',
+      text: 'Tus manos eran el lugar más seguro del mundo. Me enseñaste a atarme los zapatos, a pedir perdón y a no tenerle miedo a la oscuridad. Cada raspón se curaba con un beso tuyo, y cada noche terminaba con tu voz.',
       photos: [
         { src: 'assets/fotos/etapa1/foto1.jpg', caption: 'Mi primer día de clases' },
         { src: 'assets/fotos/etapa1/foto2.jpg', caption: 'Cumpleaños #6' },
@@ -66,7 +66,7 @@ window.SITE_DATA = {
       title: 'Joven',
       ages: '13 a 15 años',
       quote: 'Aprendiendo a ser yo',
-      text: 'Llegaron los años de puertas cerradas, música a todo volumen y preguntas que no sabía cómo hacerte. Aunque no siempre te lo dijera, te buscaba con la mirada en cada [partido, presentación o entrega de notas]. Y ahí estabas, siempre.',
+      text: 'Llegaron los años de puertas cerradas, música a todo volumen y preguntas que no sabía cómo hacerte. Aunque no siempre te lo dijera, te buscaba con la mirada en cada partido, presentación o entrega de notas. Y ahí estabas, siempre.',
       photos: [
         { src: 'assets/fotos/etapa2/foto1.jpg', caption: 'Grado de primaria' },
         { src: 'assets/fotos/etapa2/foto2.jpg', caption: 'Partido del sábado' },
@@ -129,6 +129,8 @@ window.SITE_DATA = {
   closing: {
     eyebrow: 'Feliz cumpleaños',
     title: 'Te amo, mamá',
-    phrase: 'Gracias por ser el hilo que une toda mi historia.'
+    phrase: 'Gracias por ser el hilo que une toda mi historia.',
+    madeByLabel: 'Hecho por',
+    madeBy: 'Deivid, tu hijo que te ama'
   }
 };
