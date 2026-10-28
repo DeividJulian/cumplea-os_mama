@@ -13,11 +13,17 @@
   const POLAROID_TILT = ['-3deg', '2.4deg', '-1.4deg', '3.4deg', '2.4deg', '-3deg'];
   const COLLAGE_TILT = ['-1.1deg', '1.3deg'];
   const COLLAGE_SIZES = ['big', '', '', 'wide', 'wide', 'wide'];
+  // Súbelo si cambias archivos con el mismo nombre: obliga al navegador a pedirlos de nuevo
+  const ASSET_VERSION = '2';
 
   /* ---------- Utilidades ---------- */
 
   function fill(text) {
     return String(text ?? '').replace(/\{nombre\}/g, data.momName);
+  }
+
+  function assetUrl(src) {
+    return src + (src.includes('?') ? '&' : '?') + 'v=' + ASSET_VERSION;
   }
 
   function getPath(obj, path) {
@@ -64,7 +70,7 @@
       frame.append(placeholder(caption));
       return frame;
     }
-    const img = el('img', { src: photo.src, alt: caption, loading: lazy === false ? null : 'lazy', decoding: 'async' });
+    const img = el('img', { src: assetUrl(photo.src), alt: caption, loading: lazy === false ? null : 'lazy', decoding: 'async' });
     if (photo.focus) img.style.objectPosition = photo.focus;
     img.addEventListener('error', () => img.replaceWith(placeholder(caption)), { once: true });
     frame.append(img);
@@ -256,7 +262,7 @@
     lightbox.media.replaceChildren();
     const fallback = () => lightbox.media.replaceChildren(photoFrame({ caption: photo.caption }, 'ar-45'));
     if (photo.src) {
-      const img = el('img', { src: photo.src, alt: caption });
+      const img = el('img', { src: assetUrl(photo.src), alt: caption });
       img.addEventListener('error', fallback, { once: true });
       lightbox.media.append(img);
     } else {
@@ -383,7 +389,7 @@
       button.hidden = true;
       return;
     }
-    audio.src = data.music;
+    audio.src = assetUrl(data.music);
 
     const setPlaying = (playing) => {
       button.classList.toggle('is-playing', playing);
