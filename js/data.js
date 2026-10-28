@@ -23,7 +23,9 @@ window.SITE_DATA = {
     eyebrow: 'Un regalo hecho con amor',
     titleTop: 'Feliz cumpleaños,',
     titleScript: 'mamá',
-    phrase: 'Gracias por estar en cada capítulo de mi vida. Esto es un pequeño recorrido por todos ellos.'
+    phrase: 'Gracias por estar en cada capítulo de mi vida. Esto es un pequeño recorrido por todos ellos.',
+    // Foto de presentación (deja src: '' para quitarla)
+    photo: { src: 'assets/fotos/portada.jpg', caption: 'Donde empezó todo', focus: '50% 30%' }
   },
 
   intro: {
@@ -42,6 +44,9 @@ window.SITE_DATA = {
      icon: 'star' | 'sun' | 'book' | 'heart'
      En 'collage' puedes añadir size: 'big' o 'wide' a una foto
      para hacerla más grande (si no, se reparte automáticamente).
+     focus (opcional): qué parte de la foto se ve cuando se recorta,
+       como '50% 50%' (centro), '30% 50%' (más a la izquierda),
+       '50% 20%' (más arriba). En grande siempre se ve completa.
      --------------------------------------------------------- */
   stages: [
     {
@@ -52,12 +57,12 @@ window.SITE_DATA = {
       quote: 'Tú eras mi mundo entero',
       text: 'Tus manos eran el lugar más seguro del mundo. Me enseñaste a atarme los zapatos, a pedir perdón y a no tenerle miedo a la oscuridad. Cada raspón se curaba con un beso tuyo, y cada noche terminaba con tu voz.',
       photos: [
-        { src: 'assets/fotos/etapa1/foto1.jpg', caption: 'Mi primer día de clases' },
-        { src: 'assets/fotos/etapa1/foto2.jpg', caption: 'Cumpleaños #6' },
-        { src: 'assets/fotos/etapa1/foto3.jpg', caption: 'Tú y yo en el parque' },
-        { src: 'assets/fotos/etapa1/foto4.jpg', caption: 'Mi disfraz favorito' },
-        { src: 'assets/fotos/etapa1/foto5.jpg', caption: 'Vacaciones en familia' },
-        { src: 'assets/fotos/etapa1/foto6.jpg', caption: 'La foto que más te gusta' }
+        { src: 'assets/fotos/etapa1/foto1.jpg', caption: 'Mi primer abrazo guardado', focus: '40% 50%' },
+        { src: 'assets/fotos/etapa1/foto2.jpg', caption: 'Día de piscina contigo' },
+        { src: 'assets/fotos/etapa1/foto3.jpg', caption: 'Frente al mar, de tu mano' },
+        { src: 'assets/fotos/etapa1/foto4.jpg', caption: 'Paseo lleno de colores' },
+        { src: 'assets/fotos/etapa1/foto5.jpg', caption: 'Tardes de parque' },
+        { src: 'assets/fotos/etapa1/foto6.jpg', caption: '¡Ni el león me asustaba!', focus: '30% 50%' }
       ]
     },
     {
@@ -68,12 +73,12 @@ window.SITE_DATA = {
       quote: 'Aprendiendo a ser yo',
       text: 'Llegaron los años de puertas cerradas, música a todo volumen y preguntas que no sabía cómo hacerte. Aunque no siempre te lo dijera, te buscaba con la mirada en cada partido, presentación o entrega de notas. Y ahí estabas, siempre.',
       photos: [
-        { src: 'assets/fotos/etapa2/foto1.jpg', caption: 'Grado de primaria' },
-        { src: 'assets/fotos/etapa2/foto2.jpg', caption: 'Partido del sábado' },
-        { src: 'assets/fotos/etapa2/foto3.jpg', caption: 'Esa Navidad' },
-        { src: 'assets/fotos/etapa2/foto4.jpg', caption: 'Paseo familiar' },
-        { src: 'assets/fotos/etapa2/foto5.jpg', caption: 'Tú en la tribuna' },
-        { src: 'assets/fotos/etapa2/foto6.jpg', caption: 'Mis 15 años' }
+        { src: 'assets/fotos/etapa2/foto1.jpg', caption: 'Mi torneo de fútbol', size: 'big', focus: '50% 60%' },
+        { src: 'assets/fotos/etapa2/foto2.jpg', caption: 'Mi grado', size: '' },
+        { src: 'assets/fotos/etapa2/foto3.jpg', caption: 'Mi barra fiel', size: '' },
+        { src: 'assets/fotos/etapa2/foto4.jpg', caption: 'Sonrisas en casa', size: 'wide', focus: '50% 20%' },
+        { src: 'assets/fotos/etapa2/foto5.jpg', caption: 'Vacaciones en el mar', size: 'wide', focus: '50% 25%' },
+        { src: 'assets/fotos/etapa2/foto6.jpg', caption: 'Atardecer en la playa', size: 'wide', focus: '50% 40%' }
       ]
     },
     {
@@ -84,12 +89,12 @@ window.SITE_DATA = {
       quote: 'Tú me enseñaste a volar',
       text: 'Entre exámenes, dudas y decisiones grandes, fuiste mi brújula. Me dejaste equivocarme, me ayudaste a levantarme y celebraste cada paso como si fuera tuyo. Hoy entiendo cuántas veces pusiste mis sueños antes que los tuyos.',
       photos: [
-        { src: 'assets/fotos/etapa3/foto1.jpg', caption: 'Grado once' },
-        { src: 'assets/fotos/etapa3/foto2.jpg', caption: 'Tú ayudándome a estudiar' },
-        { src: 'assets/fotos/etapa3/foto3.jpg', caption: 'Mi graduación' },
-        { src: 'assets/fotos/etapa3/foto4.jpg', caption: 'Viaje de fin de año' },
-        { src: 'assets/fotos/etapa3/foto5.jpg', caption: 'Un domingo cualquiera' },
-        { src: 'assets/fotos/etapa3/foto6.jpg', caption: 'Mis 18' }
+        { src: 'assets/fotos/etapa3/foto1.jpg', caption: 'Paseo por La Unión' },
+        { src: 'assets/fotos/etapa3/foto2.jpg', caption: 'Fiesta en casa', focus: '50% 70%' },
+        { src: 'assets/fotos/etapa3/foto3.jpg', caption: 'Noches de paseo' },
+        { src: 'assets/fotos/etapa3/foto4.jpg', caption: 'Con la camiseta puesta', focus: '50% 60%' },
+        { src: 'assets/fotos/etapa3/foto5.jpg', caption: 'Celebrando juntos' },
+        { src: 'assets/fotos/etapa3/foto6.jpg', caption: 'Almuerzos contigo' }
       ]
     },
     {
@@ -100,11 +105,11 @@ window.SITE_DATA = {
       quote: 'Ahora entiendo todo lo que hiciste',
       text: 'Ya no soy el niño que te tomaba de la mano para cruzar la calle, pero sigo buscándote en cada decisión importante. Todo lo que soy tiene algo tuyo. Gracias por quedarte en cada etapa, mamá.',
       photos: [
-        { src: 'assets/fotos/etapa4/foto1.jpg', caption: 'Nuestra foto favorita de hoy' },
-        { src: 'assets/fotos/etapa4/foto2.jpg', caption: 'Universidad' },
-        { src: 'assets/fotos/etapa4/foto3.jpg', caption: 'Tu cumpleaños pasado' },
-        { src: 'assets/fotos/etapa4/foto4.jpg', caption: 'Almuerzo de domingo' },
-        { src: 'assets/fotos/etapa4/foto5.jpg', caption: 'Nosotros hoy' }
+        { src: 'assets/fotos/etapa4/foto1.jpg', caption: 'Rumbo a nuevas aventuras', focus: '20% 50%' },
+        { src: 'assets/fotos/etapa4/foto2.jpg', caption: 'Mi lugar favorito: tu abrazo' },
+        { src: 'assets/fotos/etapa4/foto3.jpg', caption: 'Abrazos que lo curan todo', focus: '50% 40%' },
+        { src: 'assets/fotos/etapa4/foto4.jpg', caption: 'Antes de volar' },
+        { src: 'assets/fotos/etapa4/foto5.jpg', caption: 'Noche especial', focus: '50% 25%' }
       ]
     }
   ],
@@ -131,6 +136,8 @@ window.SITE_DATA = {
     title: 'Te amo, mamá',
     phrase: 'Gracias por ser el hilo que une toda mi historia.',
     madeByLabel: 'Hecho por',
-    madeBy: 'Deivid, tu hijo que te ama'
+    madeBy: 'Deivid, tu hijo que te ama',
+    // Foto junto a "Te amo, mamá" (deja src: '' para quitarla)
+    photo: { src: 'assets/fotos/final.jpg', caption: 'Siempre seré tu niño', focus: '35% 50%' }
   }
 };

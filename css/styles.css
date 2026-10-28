@@ -92,7 +92,7 @@ button { font: inherit; color: inherit; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 104px 20px 140px;
+  padding: 72px 20px 130px;
   text-align: center;
   overflow: hidden;
 }
@@ -112,6 +112,32 @@ button { font: inherit; color: inherit; }
 }
 .petal--sm { width: 10px; height: 16px; background: #E6B3A6; opacity: .6; }
 .petal--gold { width: 9px; height: 15px; background: #DDB788; opacity: .55; }
+
+/* Foto de presentación en marco de arco */
+.cover-photo { position: relative; margin-bottom: 30px; }
+.cover-photo__frame {
+  --ph-bg: var(--rose-200); --ph-line: var(--rose-400); --ph-ink: #8A4250;
+  width: clamp(150px, 40vw, 220px);
+  padding: 6px;
+  background: var(--paper);
+  border-radius: 999px 999px 18px 18px;
+  box-shadow: var(--shadow-soft);
+  outline: 1px solid var(--gold);
+  outline-offset: 6px;
+}
+.cover-photo__frame .photo__frame { border-radius: 999px 999px 12px 12px; }
+.cover-photo__caption {
+  margin: 16px 0 0;
+  font-family: var(--font-script);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--terracotta);
+}
+.ar-34 { aspect-ratio: 3 / 4; }
+@media (hover: hover) {
+  .cover-photo__frame:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+}
 
 .cover__eyebrow { margin-bottom: 22px; font-size: 12px; letter-spacing: .24em; }
 .cover__title { margin: 0; font-weight: 400; }
@@ -522,6 +548,23 @@ button { font: inherit; color: inherit; }
 }
 .closing__canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .closing__inner { position: relative; max-width: 720px; margin: 0 auto; }
+
+/* Polaroid junto a "Te amo, mamá" */
+.closing-photo { margin: 0 auto 44px; width: clamp(190px, 52vw, 250px); }
+.closing-photo__frame {
+  --ph-bg: #F6DCDC; --ph-line: #D9A3A8; --ph-ink: #8A4250;
+  --rot: -3deg;
+  position: relative;
+  padding-bottom: 10px;
+}
+.closing-photo__caption {
+  margin: 18px 0 0;
+  font-family: var(--font-script);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--wine);
+}
 .closing__title {
   margin: 0;
   font-family: var(--font-script);

@@ -65,6 +65,7 @@
       return frame;
     }
     const img = el('img', { src: photo.src, alt: caption, loading: lazy === false ? null : 'lazy', decoding: 'async' });
+    if (photo.focus) img.style.objectPosition = photo.focus;
     img.addEventListener('error', () => img.replaceWith(placeholder(caption)), { once: true });
     frame.append(img);
     return frame;
@@ -176,10 +177,36 @@
       ]));
     });
 
-    timeline.addEventListener('click', (event) => {
+    document.addEventListener('click', (event) => {
       const button = event.target.closest('.photo[data-stage]');
-      if (button) openLightbox(+button.dataset.stage, +button.dataset.photo, button);
+      if (button) openLightbox(button.dataset.stage, +button.dataset.photo, button);
     });
+  }
+
+  /* ---------- Fotos de portada y cierre ---------- */
+
+  // Galerías sueltas (una sola foto) que también se abren en el lightbox
+  const extraGalleries = {
+    cover: { title: 'El comienzo', photos: [data.cover.photo].filter((p) => p && p.src) },
+    closing: { title: 'Te amo, mamá', photos: [data.closing.photo].filter((p) => p && p.src) }
+  };
+
+  function galleryFor(key) {
+    return extraGalleries[key] || data.stages[+key];
+  }
+
+  function buildSinglePhoto(key, containerId, className, ratioClass, withTape) {
+    const container = document.getElementById(containerId);
+    const photo = extraGalleries[key].photos[0];
+    if (!photo) {
+      container.remove();
+      return;
+    }
+    container.append(photoButton(key, 0, photo, className, [
+      photoFrame(photo, ratioClass, false),
+      withTape ? el('span', { class: 'tape', 'aria-hidden': 'true' }) : null
+    ]));
+    if (photo.caption) container.append(el('p', { class: containerId + '__caption', text: fill(photo.caption) }));
   }
 
   /* ---------- Animaciones al hacer scroll ---------- */
@@ -216,7 +243,7 @@
   };
 
   function renderLightbox() {
-    const stage = data.stages[lightbox.stage];
+    const stage = galleryFor(lightbox.stage);
     const photo = stage.photos[lightbox.index];
     const caption = fill(photo.caption);
 
@@ -235,14 +262,14 @@
     lightbox.media.style.animation = '';
 
     lightbox.caption.textContent = caption;
-    lightbox.meta.textContent = fill(stage.title) + ' · ' + (lightbox.index + 1) + ' de ' + stage.photos.length;
     const single = stage.photos.length < 2;
+    lightbox.meta.textContent = fill(stage.title) + (single ? '' : ' · ' + (lightbox.index + 1) + ' de ' + stage.photos.length);
     lightbox.prev.hidden = single;
     lightbox.next.hidden = single;
   }
 
-  function openLightbox(stageIndex, photoIndex, opener) {
-    lightbox.stage = stageIndex;
+  function openLightbox(galleryKey, photoIndex, opener) {
+    lightbox.stage = galleryKey;
     lightbox.index = photoIndex;
     lightbox.opener = opener || null;
     renderLightbox();
@@ -259,7 +286,7 @@
   }
 
   function stepLightbox(delta) {
-    const count = data.stages[lightbox.stage].photos.length;
+    const count = galleryFor(lightbox.stage).photos.length;
     if (count < 2) return;
     lightbox.index = (lightbox.index + delta + count) % count;
     renderLightbox();
@@ -490,6 +517,8 @@
 
   fillTexts();
   buildTimeline();
+  buildSinglePhoto('cover', 'cover-photo', 'cover-photo__frame', 'ar-34');
+  buildSinglePhoto('closing', 'closing-photo', 'polaroid closing-photo__frame', 'ar-45', true);
   setupReveal();
   setupLightbox();
   setupLetter();
