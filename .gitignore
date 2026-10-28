@@ -1,3 +1,5 @@
+# Fotos originales sin ordenar (pesadas): solo se suben las de assets/
+fotos_por_ordenar/
 .vercel
 .vscode
 .DS_Store

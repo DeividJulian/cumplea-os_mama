@@ -13,7 +13,7 @@
    ========================================================= */
 
 window.SITE_DATA = {
-  momName: '[NOMBRE DE MAMÁ]',
+  momName: 'Nallely',
   signature: '[TU NOMBRE]',
 
   // Canción (deja '' si no quieres música)
