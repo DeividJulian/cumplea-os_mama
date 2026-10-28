@@ -75,10 +75,15 @@
     return el('button', {
       type: 'button',
       class: 'photo ' + className,
-      'aria-label': 'Ver en grande: ' + fill(photo.caption),
+      'aria-label': photo.caption ? 'Ver en grande: ' + fill(photo.caption) : 'Ver foto en grande',
       'data-stage': stageIndex,
       'data-photo': photoIndex
     }, children);
+  }
+
+  // Pie de foto opcional: sin texto no se crea la etiqueta
+  function captionEl(className, photo) {
+    return photo.caption ? el('span', { class: className, text: fill(photo.caption) }) : null;
   }
 
   /* ---------- Textos fijos ---------- */
@@ -86,6 +91,7 @@
   function fillTexts() {
     document.querySelectorAll('[data-text]').forEach((node) => {
       node.textContent = fill(getPath(data, node.dataset.text));
+      if (!node.textContent) node.hidden = true;
     });
     const body = document.getElementById('letter-body');
     (data.letter.paragraphs || []).forEach((p) => body.append(el('p', { text: fill(p) })));
@@ -111,7 +117,7 @@
         const size = photo.size ?? COLLAGE_SIZES[i % COLLAGE_SIZES.length];
         const button = photoButton(s, i, photo, 'collage' + (size ? ' collage--' + size : ''), [
           photoFrame(photo, ''),
-          el('span', { class: 'collage__caption', text: fill(photo.caption) }),
+          captionEl('collage__caption', photo),
           el('span', { class: 'collage__tape', 'aria-hidden': 'true' })
         ]);
         button.style.setProperty('--rot', COLLAGE_TILT[i % COLLAGE_TILT.length]);
@@ -123,7 +129,7 @@
       return el('div', { class: 'stage__gallery gallery-grid' }, stage.photos.map((photo, i) =>
         el('div', { class: 'grid-item' }, [
           photoButton(s, i, photo, '', [photoFrame(photo, 'ar-11')]),
-          el('span', { class: 'grid-item__caption', text: fill(photo.caption) })
+          captionEl('grid-item__caption', photo)
         ])
       ));
     },
@@ -134,7 +140,7 @@
       if (first) {
         root.append(photoButton(s, 0, first, 'featured', [
           photoFrame(first, 'ar-32'),
-          el('span', { class: 'featured__caption', text: fill(first.caption) })
+          captionEl('featured__caption', first)
         ]));
       }
       if (rest.length) {
