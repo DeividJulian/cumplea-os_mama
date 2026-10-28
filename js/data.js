@@ -16,8 +16,26 @@ window.SITE_DATA = {
   momName: 'Nallely',
   signature: 'Deivid',
 
-  // Canción (deja '' si no quieres música)
-  music: 'assets/musica/cancion.mp3',
+  // Canciones: el botón flotante abre una lista para elegir.
+  // title = lo que se lee en grande; song = nombre de la canción (opcional).
+  // Al terminar una canción sigue la siguiente. Deja [] si no quieres música.
+  songs: [
+    {
+      title: 'De parte de tu esposo',
+      song: 'Baila conmigo (Hasta que la plata nos separe)',
+      src: 'assets/musica/baila-conmigo.mp3'
+    },
+    {
+      title: 'De parte de tu hijo',
+      song: 'Señora, Señora · Denisse de Kalafe',
+      src: 'assets/musica/senora-senora.mp3'
+    },
+    {
+      title: 'Tu esposo te ama así lo hagas enojar',
+      song: 'Me gustas un resto · El man es Germán',
+      src: 'assets/musica/me-gustas-un-resto.mp3'
+    }
+  ],
 
   cover: {
     eyebrow: 'Un regalo hecho con amor',

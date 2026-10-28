@@ -383,41 +383,102 @@
 
   function setupMusic() {
     const audio = document.getElementById('music');
+    const player = document.getElementById('music-player');
     const button = document.getElementById('music-btn');
+    const panel = document.getElementById('music-panel');
+    const list = document.getElementById('music-list');
+    const songs = (data.songs || []).filter((song) => song && song.src);
 
-    if (!data.music) {
-      button.hidden = true;
+    if (!songs.length) {
+      player.hidden = true;
       return;
     }
-    audio.src = assetUrl(data.music);
 
-    const setPlaying = (playing) => {
-      button.classList.toggle('is-playing', playing);
-      button.setAttribute('aria-pressed', String(playing));
-      button.setAttribute('aria-label', playing ? 'Pausar música' : 'Reproducir música');
-    };
+    let current = -1;
 
-    const play = () => {
+    const rows = songs.map((song, i) => {
+      const icon = el('span', { class: 'song__icon', 'aria-hidden': 'true' });
+      icon.innerHTML = '<svg class="song__play" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>' +
+        '<span class="eq"><span></span><span></span><span></span></span>';
+      const row = el('button', { type: 'button', class: 'song', 'aria-pressed': 'false' }, [
+        icon,
+        el('span', { class: 'song__text' }, [
+          el('span', { class: 'song__title', text: fill(song.title) }),
+          song.song ? el('span', { class: 'song__name', text: fill(song.song) }) : null
+        ])
+      ]);
+      row.addEventListener('click', () => choose(i));
+      list.append(el('li', null, [row]));
+      return row;
+    });
+
+    function render() {
+      const playing = current >= 0 && !audio.paused;
+      player.classList.toggle('is-playing', playing);
+      rows.forEach((row, i) => {
+        const isCurrent = i === current;
+        row.classList.toggle('is-current', isCurrent);
+        row.classList.toggle('is-playing', isCurrent && playing);
+        row.setAttribute('aria-pressed', String(isCurrent && playing));
+      });
+      button.setAttribute('aria-label', playing ? 'Sonando: ' + fill(songs[current].title) + '. Elegir canción' : 'Elegir canción');
+    }
+
+    function playSong(i) {
+      if (i !== current) {
+        current = i;
+        audio.src = assetUrl(songs[i].src);
+      }
       const attempt = audio.play();
-      if (attempt && attempt.catch) attempt.catch(() => setPlaying(false));
-    };
+      if (attempt && attempt.catch) attempt.catch(render);
+      render();
+    }
 
-    audio.addEventListener('play', () => setPlaying(true));
-    audio.addEventListener('pause', () => setPlaying(false));
-    // Si la canción no existe, el botón desaparece
-    audio.addEventListener('error', () => { button.hidden = true; });
+    // Tocar la canción que suena la pausa; tocar otra la cambia
+    function choose(i) {
+      if (i === current && !audio.paused) audio.pause();
+      else playSong(i);
+    }
 
-    button.addEventListener('click', () => (audio.paused ? play() : audio.pause()));
+    function setOpen(open) {
+      panel.hidden = !open;
+      button.setAttribute('aria-expanded', String(open));
+      if (open) player.classList.add('is-touched');
+    }
 
-    // Los navegadores bloquean el autoplay: empieza con el primer toque
+    audio.addEventListener('play', render);
+    audio.addEventListener('pause', render);
+    // Al terminar, sigue la siguiente canción
+    audio.addEventListener('ended', () => playSong((current + 1) % songs.length));
+    // Si un archivo no existe, esa canción queda desactivada
+    audio.addEventListener('error', () => {
+      if (current < 0) return;
+      rows[current].disabled = true;
+      render();
+    });
+
+    button.addEventListener('click', () => setOpen(panel.hidden));
+    document.addEventListener('click', (event) => {
+      if (!panel.hidden && !player.contains(event.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+
+    // Los navegadores bloquean el autoplay: la primera canción empieza con el primer toque
     const startOnFirstTouch = (event) => {
       document.removeEventListener('pointerdown', startOnFirstTouch);
       document.removeEventListener('keydown', startOnFirstTouch);
-      if (button.contains(event.target)) return;
-      if (audio.paused) play();
+      if (player.contains(event.target)) return;
+      if (current < 0) playSong(0);
     };
     document.addEventListener('pointerdown', startOnFirstTouch);
     document.addEventListener('keydown', startOnFirstTouch);
+
+    render();
   }
 
   /* ---------- Confeti y corazones (canvas) ---------- */

@@ -625,11 +625,19 @@ button { font: inherit; color: inherit; }
 /* =========================================================
    Música flotante
    ========================================================= */
-.music-btn {
+.music {
   position: fixed;
   right: 16px;
   bottom: max(16px, env(safe-area-inset-bottom));
   z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.music[hidden] { display: none; }
+
+.music-btn {
   width: 52px;
   height: 52px;
   padding: 0;
@@ -645,9 +653,11 @@ button { font: inherit; color: inherit; }
   transition: transform .25s ease;
 }
 .music-btn:hover { transform: translateY(-2px); }
-.music-btn[hidden] { display: none; }
-.music-btn__eq { display: none; align-items: flex-end; gap: 3px; height: 16px; }
-.music-btn__eq span {
+.music-btn[aria-expanded="true"] { background: var(--wine); border-color: var(--wine); color: #FBF3E8; }
+
+/* Barras animadas: indican que algo está sonando */
+.eq { display: none; align-items: flex-end; gap: 3px; height: 16px; }
+.eq span {
   display: block;
   width: 3px;
   height: 16px;
@@ -656,10 +666,106 @@ button { font: inherit; color: inherit; }
   transform-origin: bottom;
   animation: eq .9s ease-in-out infinite;
 }
-.music-btn__eq span:nth-child(2) { animation-delay: .2s; }
-.music-btn__eq span:nth-child(3) { animation-delay: .4s; }
-.music-btn.is-playing .music-btn__eq { display: flex; }
-.music-btn.is-playing .music-btn__note { display: none; }
+.eq span:nth-child(2) { animation-delay: .2s; }
+.eq span:nth-child(3) { animation-delay: .4s; }
+.music.is-playing .music-btn .eq { display: flex; }
+.music.is-playing .music-btn__note { display: none; }
+
+/* Invitación a elegir canción (se va al abrir la lista) */
+.music__hint {
+  position: absolute;
+  right: 64px;
+  bottom: 12px;
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--wine);
+  color: #FBF3E8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(122, 46, 58, .25);
+  pointer-events: none;
+  animation: hintIn .5s var(--ease-out) 1.4s both;
+}
+.music__hint::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  margin-top: -5px;
+  border: 5px solid transparent;
+  border-right: 0;
+  border-left-color: var(--wine);
+}
+.music.is-touched .music__hint { display: none; }
+
+.music__panel {
+  width: min(320px, calc(100vw - 32px));
+  padding: 16px 10px 10px;
+  background: var(--paper);
+  border: 1px solid #EBDDD0;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(92, 52, 40, .22);
+  transform-origin: bottom right;
+  animation: popIn .3s var(--ease-out) both;
+}
+.music__panel[hidden] { display: none; }
+.music__heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 8px 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+.music__heading svg { color: var(--terracotta); }
+.music__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+
+.song {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+.song:hover, .song.is-current { background: var(--rose-100); }
+.song:disabled { opacity: .45; cursor: not-allowed; }
+.song__icon {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rose-200);
+  color: var(--wine);
+}
+.song.is-current .song__icon { background: var(--wine); color: #FBF3E8; }
+.song.is-playing .song__play { display: none; }
+.song.is-playing .eq { display: flex; }
+.song__text { min-width: 0; }
+.song__title {
+  display: block;
+  font-family: var(--font-script);
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 1.15;
+  color: var(--wine);
+}
+.song__name { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 600; line-height: 1.35; color: var(--ink-soft); }
 
 /* =========================================================
    Lightbox
@@ -735,6 +841,8 @@ button { font: inherit; color: inherit; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
 @keyframes eq { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes hintIn { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: none; } }
 @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 
 @media (prefers-reduced-motion: reduce) {
